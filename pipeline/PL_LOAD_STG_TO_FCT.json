@@ -1,0 +1,165 @@
+{
+	"name": "PL_LOAD_STG_TO_FCT",
+	"properties": {
+		"activities": [
+			{
+				"name": "DIM_REGION",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[stg].[dim_region]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DIM_COUNTRY",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "DIM_REGION",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[stg].[dim_country]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DIM_PRODUCT",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[stg].[dim_product]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DIM_ORDER_PRIORITY",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[stg].[dim_order_priority]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DIM_SALES_CHANNEL",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[stg].[sales_channel]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDb",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "FCT_SALES",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "DIM_COUNTRY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "DIM_PRODUCT",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "DIM_SALES_CHANNEL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "DIM_ORDER_PRIORITY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[stg].[fct_sales]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDb",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "DWH"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-08-27T13:24:07Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

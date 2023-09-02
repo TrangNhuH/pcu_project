@@ -1,0 +1,75 @@
+{
+	"name": "xlsx_sql_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDLStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DataPrepocessing-PrepSQLSrc"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "List1",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sql.xlsx",
+				"folderPath": "sources",
+				"fileSystem": "sales"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Product Code",
+				"type": "String"
+			},
+			{
+				"name": "Sales Channel",
+				"type": "String"
+			},
+			{
+				"name": "Order Priority",
+				"type": "String"
+			},
+			{
+				"name": "Order Date",
+				"type": "String"
+			},
+			{
+				"name": "Order ID",
+				"type": "String"
+			},
+			{
+				"name": "Ship Date",
+				"type": "String"
+			},
+			{
+				"name": "Units Sold",
+				"type": "String"
+			},
+			{
+				"name": "Unit Price",
+				"type": "String"
+			},
+			{
+				"name": "Unit Cost",
+				"type": "String"
+			},
+			{
+				"name": "Total Revenue",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

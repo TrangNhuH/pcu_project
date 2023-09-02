@@ -1,0 +1,199 @@
+{
+	"name": "PL_LOAD_STG_XML",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy XML src to STG",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "XmlSource",
+						"additionalColumns": [
+							{
+								"name": "source",
+								"value": "xml"
+							}
+						],
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "XmlReadSettings",
+							"validationMode": "none",
+							"namespaces": true
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['Region']"
+								},
+								"sink": {
+									"name": "region",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Country']"
+								},
+								"sink": {
+									"name": "country",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['ProductCode']"
+								},
+								"sink": {
+									"name": "product_code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['SalesChannel']"
+								},
+								"sink": {
+									"name": "sales_channel",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['OrderPriority']"
+								},
+								"sink": {
+									"name": "order_priority",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['OrderDate']"
+								},
+								"sink": {
+									"name": "order_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "['OrderID']"
+								},
+								"sink": {
+									"name": "order_id",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"path": "['ShipDate']"
+								},
+								"sink": {
+									"name": "ship_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "['UnitsSold']"
+								},
+								"sink": {
+									"name": "units_sold",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "['UnitPrice']"
+								},
+								"sink": {
+									"name": "unit_price",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['UnitCost']"
+								},
+								"sink": {
+									"name": "unit_cost",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['TotalRevenue']"
+								},
+								"sink": {
+									"name": "total_revenue",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['source']"
+								},
+								"sink": {
+									"name": "source",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": "$['root']['row']"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "xml_source",
+						"type": "DatasetReference",
+						"parameters": {
+							"fileName": {
+								"value": "@pipeline().parameters.FileName",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "tbl_stg_sales",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "DWH"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-09-02T12:38:37Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

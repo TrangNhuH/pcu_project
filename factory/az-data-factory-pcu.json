@@ -1,0 +1,9 @@
+{
+	"name": "az-data-factory-pcu",
+	"location": "westeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8514c9b1-3ac4-430b-a09e-67e693f7a211",
+		"tenantId": "5e8f4ad7-ed0b-4267-a267-2aca5fe71246"
+	}
+}

@@ -1,0 +1,74 @@
+{
+	"name": "sql_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "region",
+				"type": "varchar"
+			},
+			{
+				"name": "country",
+				"type": "varchar"
+			},
+			{
+				"name": "product_code",
+				"type": "varchar"
+			},
+			{
+				"name": "sales_channel",
+				"type": "varchar"
+			},
+			{
+				"name": "order_priority",
+				"type": "varchar"
+			},
+			{
+				"name": "order_date",
+				"type": "date"
+			},
+			{
+				"name": "order_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ship_date",
+				"type": "date"
+			},
+			{
+				"name": "units_sold",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "unit_price",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "unit_cost",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "total_revenue",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "src",
+			"table": "sales_sql"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
