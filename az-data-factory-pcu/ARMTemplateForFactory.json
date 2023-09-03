@@ -1696,6 +1696,27 @@
 							"referenceName": "AzureSqlDb",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "Move LZ to Archive",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "LOAD FCT ENRICHED",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_MOVE_LZ_TO_ARCHIVE",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"policy": {
@@ -1712,7 +1733,8 @@
 				"[concat(variables('factoryId'), '/pipelines/PL_LOAD_STG_SQL')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_LOAD_STG_XML_CSV')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_LOAD_STG_TO_FCT')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDb')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDb')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_MOVE_LZ_TO_ARCHIVE')]"
 			]
 		},
 		{
