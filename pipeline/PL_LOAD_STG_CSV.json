@@ -67,7 +67,7 @@
 							},
 							{
 								"source": {
-									"name": "ProductCode",
+									"name": "Product Code",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -78,7 +78,7 @@
 							},
 							{
 								"source": {
-									"name": "SalesChannel",
+									"name": "Sales Channel",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -89,7 +89,7 @@
 							},
 							{
 								"source": {
-									"name": "OrderPriority",
+									"name": "Order Priority",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -100,7 +100,7 @@
 							},
 							{
 								"source": {
-									"name": "OrderDate",
+									"name": "Order Date",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -111,7 +111,7 @@
 							},
 							{
 								"source": {
-									"name": "OrderID",
+									"name": "Order ID",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -122,7 +122,7 @@
 							},
 							{
 								"source": {
-									"name": "ShipDate",
+									"name": "Ship Date",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -133,7 +133,7 @@
 							},
 							{
 								"source": {
-									"name": "UnitsSold",
+									"name": "Units Sold",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -144,7 +144,7 @@
 							},
 							{
 								"source": {
-									"name": "UnitPrice",
+									"name": "Unit Price",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -157,7 +157,7 @@
 							},
 							{
 								"source": {
-									"name": "UnitCost",
+									"name": "Unit Cost",
 									"physicalType": "String"
 								},
 								"sink": {
@@ -170,7 +170,7 @@
 							},
 							{
 								"source": {
-									"name": "TotalRevenue",
+									"name": "Total Revenue",
 									"physicalType": "String"
 								},
 								"sink": {
