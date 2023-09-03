@@ -80,6 +80,26 @@
 					"referenceName": "AzureSqlDb",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Move LZ to Archive",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "LOAD FCT ENRICHED",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_MOVE_LZ_TO_ARCHIVE",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"folder": {
