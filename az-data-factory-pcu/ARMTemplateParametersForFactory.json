@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "az-data-factory-pcu"
+		},
+		"AzureDLStorage_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricks_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricksDeltaLake1_accessToken": {
+			"value": ""
+		},
+		"AzureSqlDb_connectionString": {
+			"value": ""
+		},
+		"AzureDLStorage_properties_typeProperties_url": {
+			"value": "https://azstoragepcu.dfs.core.windows.net/"
+		},
+		"AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"value": "0902-121951-week3s4f"
+		}
+	}
+}
