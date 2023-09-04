@@ -29,7 +29,7 @@
 		},
 		"AzureDatabricks_properties_typeProperties_existingClusterId": {
 			"type": "string",
-			"defaultValue": "0902-121951-week3s4f"
+			"defaultValue": "0904-071630-q0c3rf36"
 		}
 	},
 	"variables": {
