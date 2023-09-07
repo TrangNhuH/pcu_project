@@ -15,10 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
 		},
-		"AzureDatabricksDeltaLake1_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
-		},
 		"AzureSqlDb_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDb'"
@@ -67,24 +63,6 @@
 						"value": "[parameters('AzureDatabricks_accessToken')]"
 					},
 					"existingClusterId": "[parameters('AzureDatabricks_properties_typeProperties_existingClusterId')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLake1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLake",
-				"typeProperties": {
-					"domain": "https://adb-2386864050839276.16.azuredatabricks.net",
-					"clusterId": "0830-135458-z2cwwrhi",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
-					}
 				}
 			},
 			"dependsOn": []
@@ -2489,6 +2467,134 @@
 				"[concat(variables('factoryId'), '/datasets/landingzone_folder')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_LOAD_STG_CSV')]",
 				"[concat(variables('factoryId'), '/pipelines/PL_LOAD_STG_XML')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_MAIN_STG_FCT')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PL_LOAD_STG_SQL",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_LOAD_STG_SQL",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "PL_LOAD_STG_XML_CSV",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_LOAD_STG_XML_CSV",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "PL_LOAD_STG_TO_FCT",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "PL_LOAD_STG_SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "PL_LOAD_STG_XML_CSV",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_LOAD_STG_TO_FCT",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "LOAD FCT ENRICHED",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "PL_LOAD_STG_TO_FCT",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[stg].[fct_sales_enriched]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDb",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Move LZ to Archive",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "LOAD FCT ENRICHED",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PL_MOVE_LZ_TO_ARCHIVE",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "DWH"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-09-02T14:08:29Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_LOAD_STG_SQL')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_LOAD_STG_XML_CSV')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_LOAD_STG_TO_FCT')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDb')]",
+				"[concat(variables('factoryId'), '/pipelines/PL_MOVE_LZ_TO_ARCHIVE')]"
 			]
 		}
 	]

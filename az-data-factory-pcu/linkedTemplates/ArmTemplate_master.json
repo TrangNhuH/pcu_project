@@ -15,10 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
 		},
-		"AzureDatabricksDeltaLake1_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
-		},
 		"AzureSqlDb_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDb'"
@@ -64,9 +60,6 @@
 					"AzureDatabricks_accessToken": {
 						"value": "[parameters('AzureDatabricks_accessToken')]"
 					},
-					"AzureDatabricksDeltaLake1_accessToken": {
-						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
-					},
 					"AzureSqlDb_connectionString": {
 						"value": "[parameters('AzureSqlDb_connectionString')]"
 					},
@@ -79,26 +72,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "az-data-factory-pcu_ArmTemplate_1",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'az-data-factory-pcu_ArmTemplate_0')]"
-			]
 		}
 	]
 }

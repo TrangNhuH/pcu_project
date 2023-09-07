@@ -11,9 +11,6 @@
 		"AzureDatabricks_accessToken": {
 			"value": ""
 		},
-		"AzureDatabricksDeltaLake1_accessToken": {
-			"value": ""
-		},
 		"AzureSqlDb_connectionString": {
 			"value": ""
 		},
